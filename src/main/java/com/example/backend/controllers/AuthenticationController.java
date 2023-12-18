@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.example.backend.controllers;
 
 import com.example.backend.services.AuthService;
 import io.javalin.http.Context;

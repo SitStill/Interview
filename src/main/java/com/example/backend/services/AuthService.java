@@ -1,4 +1,7 @@
 package com.example.backend.services;
 
-public class AuthService {
+import com.example.backend.models.User;
+
+public interface AuthService {
+    String authenticate(String username, String password);
 }
