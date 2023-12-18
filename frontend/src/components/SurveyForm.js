@@ -1,24 +1,59 @@
+// SurveyForm.js
 import React, { useState } from 'react';
 
 const SurveyForm = ({ onSubmitSurvey }) => {
   const [userId, setUserId] = useState('');
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+  const [attachment, setAttachment] = useState(null); // Updated to use state for attachment
 
   const handleSubmit = () => {
-    // Simulate survey submission logic. Replace with actual fetch call.
-    // Example: fetch('/submit-survey', { method: 'POST', body: JSON.stringify({ userId, question, answer }) })
-    // .then(response => response.json())
-    // .then(data => console.log(data));
-    onSubmitSurvey();
+    // Check if required fields are not empty
+    if (!userId || !question || !answer) {
+      alert('Please fill out all required fields.');
+      return;
+    }
+
+    // Create surveyData object
+    const surveyData = {
+      userId,
+      question,
+      answer,
+      attachment: attachment ? attachment.name : null,
+    };
+
+    // Call the onSubmitSurvey function with surveyData
+    onSubmitSurvey(surveyData);
+  };
+
+  // Handle file input change
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setAttachment(file);
   };
 
   return (
     <div>
-      <h2>Survey Form</h2>
-      <input type="text" placeholder="User ID" value={userId} onChange={(e) => setUserId(e.target.value)} />
-      <input type="text" placeholder="Question" value={question} onChange={(e) => setQuestion(e.target.value)} />
-      <input type="text" placeholder="Answer" value={answer} onChange={(e) => setAnswer(e.target.value)} />
+      <label>
+        User ID:
+        <input type="text" value={userId} onChange={(e) => setUserId(e.target.value)} />
+      </label>
+      <br />
+      <label>
+        Question:
+        <input type="text" value={question} onChange={(e) => setQuestion(e.target.value)} />
+      </label>
+      <br />
+      <label>
+        Answer:
+        <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} />
+      </label>
+      <br />
+      <label>
+        Attachment:
+        <input type="file" onChange={handleFileChange} />
+      </label>
+      <br />
       <button onClick={handleSubmit}>Submit Survey</button>
     </div>
   );

@@ -1,52 +1,45 @@
+// App.js
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom'; // 替换为 Routes
 import Login from './components/Login';
-import SurveyForm from './components/SurveyForm';
-import SurveyList from './components/SurveyList';
-import SearchBar from './components/SearchBar';
-
+import TransitionPage from './components/TransitionPage';
+import SubmitSurveyPage from './components/SubmitSurveyPage';
+import SearchSurveyPage from './components/SearchSurveyPage';
+import './App.css';
 
 const App = () => {
   const [token, setToken] = useState('');
-  const [surveys, setSurveys] = useState([]);
 
   const handleLogin = (newToken) => {
     setToken(newToken);
   };
 
-  const handleSubmitSurvey = () => {
-    // Simulate survey submission logic. Replace with actual fetch call.
-    // Example: fetch('/submit-survey', { method: 'POST', body: JSON.stringify({ userId, question, answer }) })
-    // .then(response => response.json())
-    // .then(data => {
-    //    console.log(data);
-    //    // Fetch updated survey list after submission
-    //    fetch('/surveys')
-    //      .then(response => response.json())
-    //      .then(data => setSurveys(data));
-    // });
-    console.log("Survey submitted");
+  const handleLogout = () => {
+    setToken('');
   };
-
-  const handleSearch = () => {
-   // Simulate search logic. Replace with actual fetch call.
-    // Example: fetch(`/search?keyword=${keyword}`)
-    // .then(response => response.json())
-    // .then(data => setSurveys(data));
-    console.log("Searching surveys");
-  };
-
+ 
   return (
-    <div>
-      {token ? (
-        <>
-          <SurveyForm onSubmitSurvey={handleSubmitSurvey} />
-          <SurveyList surveys={surveys} />
-          <SearchBar onSearch={handleSearch} />
-        </>
-      ) : (
-        <Login onLogin={handleLogin} />
-      )}
-    </div>
+    <Router>
+      <div className="app-container">
+        {token ? (
+          <>
+            <header>
+              <h1>Survey App</h1>
+              <button onClick={handleLogout}>Logout</button>
+            </header>
+            <main>
+              <Routes> {/* 替换为 Routes */}
+                <Route path="/submit" element={<SubmitSurveyPage />} />
+                <Route path="/search" element={<SearchSurveyPage />} />
+                <Route path="/" element={<TransitionPage />} />
+              </Routes>
+            </main>
+          </>
+        ) : (
+          <Login onLogin={handleLogin} />
+        )}
+      </div>
+    </Router>
   );
 };
 
