@@ -5,11 +5,21 @@ FROM openjdk:11-jre-slim
 WORKDIR /app
 
 # 复制应用的 JAR 文件到容器中
-COPY /Users/dzh/Documents/Interview/target/my-survey-app-1.0-SNAPSHOT.jar /app/backend.jar
+COPY target/my-survey-app-1.0-SNAPSHOT.jar /app/backend.jar
+
+# 复制 Javalin JAR 到容器中
+COPY target/lib/javalin-*.jar /app/lib/
+COPY target/lib/slf4j-*.jar /app/lib/
+COPY target/lib/kotlin-stdlib-*.jar /app/lib/
+COPY target/lib/javax.servlet-api-*.jar /app/lib/
+COPY target/lib/websocket-*.jar /app/lib/
+
+# 复制 Jetty 相关的 JAR 文件到容器中
+COPY target/lib/jetty-*.jar /app/lib/
 
 # 暴露应用运行的端口
-EXPOSE 7000
+EXPOSE 8080
 
 # 启动应用
-CMD ["java", "-jar", "backend.jar"]
+CMD ["java", "-cp", "backend.jar:lib/*", "com.example.backend.Main"]
 

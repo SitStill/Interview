@@ -7,10 +7,17 @@ const SearchSurveyPage = () => {
   const [surveys, setSurveys] = useState([]);
 
   const handleSearch = (keyword) => {
-    // Simulate search logic. Replace with actual fetch call.
-    // Example: fetch(`/search?keyword=${keyword}`)
-    // .then(response => response.json())
-    // .then(data => setSurveys(data));
+    fetch(`/api/search-surveys?keyword=${keyword}`, { // Update the URL to match the Nginx configuration
+      method: 'GET',
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        // Optionally handle the response from the server
+      })
+      .catch(error => {
+        console.error('Error searching surveys:', error);
+      });
   };
 
   return (
