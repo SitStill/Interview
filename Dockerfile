@@ -1,5 +1,5 @@
 # 使用基础镜像
-FROM openjdk:11-jre-slim
+FROM openjdk:8-jre-alpine
 
 # 设置工作目录
 WORKDIR /app
@@ -18,6 +18,9 @@ COPY target/lib/jackson-*.jar /app/lib/
 
 # 复制 Jetty 相关的 JAR 文件到容器中
 COPY target/lib/jetty-*.jar /app/lib/
+
+# 复制 survey.db 文件到容器中
+COPY survey.db /app/survey.db
 
 # 暴露应用运行的端口
 EXPOSE 8080
