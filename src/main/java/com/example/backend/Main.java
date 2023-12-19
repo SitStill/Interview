@@ -11,12 +11,17 @@ import com.example.backend.services.AuthServiceImpl;
 import com.example.backend.services.SurveyService;
 import com.example.backend.services.SurveyServiceImpl;
 import io.javalin.Javalin;
+import org.sqlite.SQLiteDataSource;
+
 
 public class Main {
     public static void main(String[] args) {
+        // Set up SQLite data source using the create method
+        SQLiteDataSource dataSource = MySQLiteDataSource.create("jdbc:sqlite:survey.db");
+
         // Set up repositories
-        UserRepository userRepository = new UserRepositoryImpl();
-        SurveyRepository surveyRepository = new SurveyRepositoryImpl();
+        UserRepository userRepository = new UserRepositoryImpl(dataSource);
+        SurveyRepository surveyRepository = new SurveyRepositoryImpl(dataSource);
 
         // Set up services
         AuthService authService = new AuthServiceImpl(userRepository);
@@ -29,6 +34,8 @@ public class Main {
         // Set up Javalin app
         Javalin app = Javalin.create();
 
+        presetUsers(authService);
+
         // Define routes
         app.post("/login", authController::login);
         app.post("/submit-survey", surveyController::submitSurvey);
@@ -36,8 +43,18 @@ public class Main {
         app.get("/surveys/:userId", surveyController::getSurveysByUserId);
         app.get("/search", surveyController::searchSurveys);
         app.get("/surveys/:surveyId", surveyController::getSurveyById);  // 新增路由，用于根据ID查询问卷
-
+        app.get("/", ctx -> {
+            ctx.result("Hello, this is the root endpoint!");
+        });
         // Start the application
         app.start(8080);
     }
+
+    private static void presetUsers(AuthService authService) {
+        // 预设用户
+        authService.registerUser("123", "123");
+        authService.registerUser("admin", "admin");
+        // 添加更多用户...
+    }
+
 }

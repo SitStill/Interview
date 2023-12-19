@@ -21,4 +21,10 @@ public class AuthServiceImpl implements AuthService {
         }
         return null;
     }
+
+    @Override
+    public void registerUser(String username, String password) {
+        // 注册用户
+        userRepository.registerUser(username, password);
+    }
 }

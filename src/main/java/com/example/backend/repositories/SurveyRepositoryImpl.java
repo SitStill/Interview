@@ -2,52 +2,152 @@ package com.example.backend.repositories;
 
 
 import com.example.backend.models.Survey;
+import org.sqlite.SQLiteDataSource;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SurveyRepositoryImpl implements SurveyRepository {
-    private List<Survey> surveyDatabase = new ArrayList<>();
+    private final SQLiteDataSource dataSource;
+
+    public SurveyRepositoryImpl(SQLiteDataSource dataSource) {
+        this.dataSource = dataSource;
+        initializeDatabase();
+    }
+
+    private void initializeDatabase() {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+
+            // 创建 survey 表
+            String createTableQuery = "CREATE TABLE IF NOT EXISTS survey (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "user_id VARCHAR(255)," +
+                    "question TEXT," +
+                    "answer TEXT," +
+                    "attachment TEXT" +
+                    ")";
+            statement.execute(createTableQuery);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void save(Survey survey) {
-        surveyDatabase.add(survey);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     "INSERT INTO survey (user_id, question, answer, attachment) VALUES (?, ?, ?, ?)")) {
+
+            statement.setString(1, survey.getUserId());
+            statement.setString(2, survey.getQuestion());
+            statement.setString(3, survey.getAnswer());
+            statement.setString(4, survey.getAttachment());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public List<Survey> findAll() {
-        return new ArrayList<>(surveyDatabase);
+        List<Survey> surveys = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM survey")) {
+
+            while (resultSet.next()) {
+                Survey survey = mapResultSetToSurvey(resultSet);
+                surveys.add(survey);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return surveys;
     }
 
     @Override
     public List<Survey> findByUserId(String userId) {
         List<Survey> userSurveys = new ArrayList<>();
-        for (Survey survey : surveyDatabase) {
-            if (survey.getUserId().equals(userId)) {
-                userSurveys.add(survey);
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM survey WHERE user_id = ?")) {
+
+            statement.setString(1, userId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Survey survey = mapResultSetToSurvey(resultSet);
+                    userSurveys.add(survey);
+                }
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
         return userSurveys;
     }
 
     @Override
     public List<Survey> search(String keyword) {
         List<Survey> searchResults = new ArrayList<>();
-        for (Survey survey : surveyDatabase) {
-            if (survey.getQuestion().contains(keyword) || survey.getAnswer().contains(keyword)) {
-                searchResults.add(survey);
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     "SELECT * FROM survey WHERE question LIKE ? OR answer LIKE ?")) {
+
+            String searchKeyword = "%" + keyword + "%";
+            statement.setString(1, searchKeyword);
+            statement.setString(2, searchKeyword);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Survey survey = mapResultSetToSurvey(resultSet);
+                    searchResults.add(survey);
+                }
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
         return searchResults;
     }
 
     @Override
     public Survey findById(String surveyId) {
-        for (Survey survey : surveyDatabase) {
-            if (survey.getUserId().equals(surveyId)) {
-                return survey;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM survey WHERE id = ?")) {
+
+            statement.setString(1, surveyId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapResultSetToSurvey(resultSet);
+                }
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+
+        return null; // 如果找不到对应的 survey
+    }
+
+    private Survey mapResultSetToSurvey(ResultSet resultSet) throws SQLException {
+        return new Survey(
+                resultSet.getString("user_id"),
+                resultSet.getString("question"),
+                resultSet.getString("answer"),
+                resultSet.getString("attachment")
+        );
     }
 }

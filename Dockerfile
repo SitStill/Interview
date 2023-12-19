@@ -13,6 +13,8 @@ COPY target/lib/slf4j-*.jar /app/lib/
 COPY target/lib/kotlin-stdlib-*.jar /app/lib/
 COPY target/lib/javax.servlet-api-*.jar /app/lib/
 COPY target/lib/websocket-*.jar /app/lib/
+COPY target/lib/jackson-*.jar /app/lib/
+
 
 # 复制 Jetty 相关的 JAR 文件到容器中
 COPY target/lib/jetty-*.jar /app/lib/

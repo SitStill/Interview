@@ -23,7 +23,7 @@ const SubmitSurveyPage = () => {
 //   };
 
 const handleSubmitSurvey = (surveyData) => {
-    fetch('/api/submit-survey', {
+    fetch('/submit-survey', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const handleSubmitSurvey = (surveyData) => {
         // Optionally handle the response from the server
   
         // Add code to redirect to the intermediate page after submitting the survey
-        window.location.href = '/intermediate-page'; // Update the URL to match your setup
+        window.location.href = './components/TransitionPage';// Update the URL to match your setup
       })
       .catch(error => {
         console.error('Error submitting survey:', error);
