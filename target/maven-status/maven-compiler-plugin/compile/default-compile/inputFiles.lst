@@ -1,0 +1,13 @@
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/services/AuthService.java
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/controllers/AuthenticationController.java
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/controllers/SurveyController.java
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/services/SurveyServiceImpl.java
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/models/User.java
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/models/Survey.java
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/Main.java
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/repositories/UserRepositoryImpl.java
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/repositories/SurveyRepository.java
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/services/SurveyService.java
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/repositories/UserRepository.java
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/repositories/SurveyRepositoryImpl.java
+/Users/dzh/Documents/Interview/src/main/java/com/example/backend/services/AuthServiceImpl.java
