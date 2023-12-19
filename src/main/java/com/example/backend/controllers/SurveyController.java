@@ -3,6 +3,7 @@ package com.example.backend.controllers;
 import com.example.backend.models.Survey;
 import com.example.backend.services.SurveyService;
 import io.javalin.http.Context;
+import io.javalin.http.UploadedFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,20 +50,6 @@ public class SurveyController {
         ctx.json(searchResults);
     }
 
-
-    private String handleFileUpload(Context ctx) {
-        String uploadDirectory = "uploads";  // 存储上传文件的目录
-        try {
-            Path tempFile = Files.createTempFile(Paths.get(uploadDirectory), "upload-", ".tmp");
-            InputStream input = ctx.uploadedFiles("attachment").get(0).getContent();
-            Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
-            return tempFile.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public void getSurveyById(Context ctx) {
         String surveyId = ctx.pathParam("surveyId");
         Survey survey = surveyService.getSurveyById(surveyId);
@@ -70,6 +57,27 @@ public class SurveyController {
             ctx.json(survey);
         } else {
             ctx.status(404).json("Survey not found");
+        }
+    }
+
+
+    private String handleFileUpload(Context ctx) {
+        String uploadDirectory = "uploads";  // 存储上传文件的目录
+        try {
+            List<UploadedFile> files = ctx.uploadedFiles("attachment");
+
+            if (files.isEmpty()) {
+                // 处理没有上传文件的情况
+                return null;
+            }
+
+            Path tempFile = Files.createTempFile(Paths.get(uploadDirectory), "upload-", ".tmp");
+            InputStream input = files.get(0).getContent();
+            Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
+            return tempFile.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

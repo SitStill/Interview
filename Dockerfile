@@ -20,6 +20,8 @@ COPY target/lib/jetty-*.jar /app/lib/
 # 暴露应用运行的端口
 EXPOSE 8080
 
+RUN mkdir -p /app/uploads
+RUN chmod -R 755 /app/uploads
+
 # 启动应用
 CMD ["java", "-cp", "backend.jar:lib/*", "com.example.backend.Main"]
-
