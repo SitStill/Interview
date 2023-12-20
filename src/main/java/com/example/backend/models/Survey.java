@@ -7,6 +7,7 @@ public class Survey {
     private String attachment;  // 新增字段，用于保存附件路径
 
     // Constructors, getters, and setters
+    public Survey(){}
 
 
     public Survey(String userId, String question, String answer, String attachment) {
@@ -46,5 +47,15 @@ public class Survey {
 
     public void setAttachment(String attachment) {
         this.attachment = attachment;
+    }
+
+    @Override
+    public String toString() {
+        return "Survey{" +
+                "userId='" + userId + '\'' +
+                ", question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                ", attachment='" + attachment + '\'' +
+                '}';
     }
 }

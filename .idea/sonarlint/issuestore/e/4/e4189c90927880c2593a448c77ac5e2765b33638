@@ -1,0 +1,5 @@
+
+G
+java:S1068	"*Remove this unused "logger" private field.(ü¿Š8Ó›ƒ“È1
+T
+java:S3655"7Call "Optional#isPresent()" before accessing the value.(ù“Ê8Ú‚Ê‘È1

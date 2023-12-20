@@ -1,5 +1,6 @@
 package com.example.backend.controllers;
 
+import com.example.backend.models.User;
 import com.example.backend.services.AuthService;
 import io.javalin.http.Context;
 
@@ -11,8 +12,11 @@ public class AuthenticationController {
     }
 
     public void login(Context ctx) {
-        String username = ctx.formParam("username");
-        String password = ctx.formParam("password");
+        // 使用 ctx.bodyAsClass 解析 JSON 数据
+        User userCredentials = ctx.bodyAsClass(User.class);
+
+        String username = userCredentials.getUsername();
+        String password = userCredentials.getPassword();
 
         String token = authService.authenticate(username, password);
 

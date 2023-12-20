@@ -5,6 +5,7 @@ public class User {
     private String password;
 
     // Constructors, getters, and setters
+    public User() {}
 
     public User(String username, String password) {
         this.username = username;

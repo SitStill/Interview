@@ -1,6 +1,5 @@
-// App.js
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom'; // 替换为 Routes
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import TransitionPage from './components/TransitionPage';
 import SubmitSurveyPage from './components/SubmitSurveyPage';
@@ -17,7 +16,7 @@ const App = () => {
   const handleLogout = () => {
     setToken('');
   };
- 
+
   return (
     <Router>
       <div className="app-container">
@@ -28,7 +27,7 @@ const App = () => {
               <button onClick={handleLogout}>Logout</button>
             </header>
             <main>
-              <Routes> {/* 替换为 Routes */}
+              <Routes>
                 <Route path="/submit" element={<SubmitSurveyPage />} />
                 <Route path="/search" element={<SearchSurveyPage />} />
                 <Route path="/" element={<TransitionPage />} />

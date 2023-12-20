@@ -46,6 +46,15 @@ public class Main {
         app.get("/", ctx -> {
             ctx.result("Hello, this is the root endpoint!");
         });
+
+        // Add a new endpoint in Main.java
+        app.get("/initialize", ctx -> {
+            // Register some test users
+            userRepository.registerUser("123", "123");
+            userRepository.registerUser("adminn", "admin");
+            userRepository.registerUser("testuser3", "password3");
+            ctx.result("Initialization complete");
+        });
         // Start the application
         app.start(8080);
     }

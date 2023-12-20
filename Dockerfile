@@ -14,13 +14,17 @@ COPY target/lib/kotlin-stdlib-*.jar /app/lib/
 COPY target/lib/javax.servlet-api-*.jar /app/lib/
 COPY target/lib/websocket-*.jar /app/lib/
 COPY target/lib/jackson-*.jar /app/lib/
-
+COPY target/lib/log4j-*.jar /app/lib/
 
 # 复制 Jetty 相关的 JAR 文件到容器中
 COPY target/lib/jetty-*.jar /app/lib/
 
 # 复制 survey.db 文件到容器中
 COPY survey.db /app/survey.db
+RUN chmod 666 /app/survey.db
+
+# 复制 SQLite JDBC 到容器中
+COPY target/lib/sqlite-jdbc-*.jar /app/lib/
 
 # 暴露应用运行的端口
 EXPOSE 8080

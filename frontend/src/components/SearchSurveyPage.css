@@ -1,0 +1,64 @@
+/* SearchSurveyPage.css */
+/* Add your styles here */
+/* Container styles */
+div {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Header styles */
+  h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Radio button styles */
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* Input styles */
+  input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  /* SearchBar input styles */
+  #user-id-input input[type="text"] {
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+  
+  /* SurveyList styles */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    div {
+      padding: 10px;
+    }
+  }
+
+/* Hide the input when searchType is 'all' */
+#user-id-input {
+    display: none;
+  }
+  
+  /* Show the input when searchType is 'userId' */
+  #user-id-input.visible {
+    display: block;
+  }
+  

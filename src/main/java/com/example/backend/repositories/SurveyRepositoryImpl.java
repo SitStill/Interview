@@ -2,6 +2,8 @@ package com.example.backend.repositories;
 
 
 import com.example.backend.models.Survey;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.sqlite.SQLiteDataSource;
 
 import java.sql.*;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SurveyRepositoryImpl implements SurveyRepository {
+    private static final Logger logger = LogManager.getLogger(SurveyRepositoryImpl.class);
     private final SQLiteDataSource dataSource;
 
     public SurveyRepositoryImpl(SQLiteDataSource dataSource) {
@@ -46,10 +49,16 @@ public class SurveyRepositoryImpl implements SurveyRepository {
             statement.setString(3, survey.getAnswer());
             statement.setString(4, survey.getAttachment());
 
+            // 添加日志以输出 SQL 语句和参数
+            logger.info("Executing SQL: {}", statement.toString());
+
             statement.executeUpdate();
+
+            logger.info("Survey saved successfully to the database: {}", survey);
 
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.error("Error saving survey to the database: {}", e.getMessage());
         }
     }
 
@@ -125,7 +134,7 @@ public class SurveyRepositoryImpl implements SurveyRepository {
     @Override
     public Survey findById(String surveyId) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM survey WHERE id = ?")) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM survey WHERE user_id = ?")) {
 
             statement.setString(1, surveyId);
 

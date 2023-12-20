@@ -1,35 +1,46 @@
-// SurveyForm.js
 import React, { useState } from 'react';
 
 const SurveyForm = ({ onSubmitSurvey }) => {
   const [userId, setUserId] = useState('');
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
-  const [attachment, setAttachment] = useState(null); // Updated to use state for attachment
+  const [attachment, setAttachment] = useState(null);
 
-  const handleSubmit = () => {
-    // Check if required fields are not empty
-    if (!userId || !question || !answer) {
-      alert('Please fill out all required fields.');
-      return;
-    }
-
-    // Create surveyData object
-    const surveyData = {
-      userId,
-      question,
-      answer,
-      attachment: attachment ? attachment.name : null,
-    };
-
-    // Call the onSubmitSurvey function with surveyData
-    onSubmitSurvey(surveyData);
-  };
-
-  // Handle file input change
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setAttachment(file);
+  };
+
+  const handleSubmit = async () => {
+
+    const formData = new FormData();
+    formData.append('userId', userId);
+    formData.append('question', question);
+    formData.append('answer', answer);
+
+    // 添加附件（如果有）
+    if (attachment) {
+        formData.append('attachment', attachment);
+    }
+
+    // 使用 fetch 发送 POST 请求
+    try {
+      const response = await fetch('/api/submit-survey', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log('Survey submitted successfully:', responseData);
+        // 在这里可以执行成功提交后的其他操作，例如重定向到另一个页面
+        window.location.href = '/';
+      } else {
+        console.error('Failed to submit survey:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error during survey submission:', error);
+    }
   };
 
   return (
