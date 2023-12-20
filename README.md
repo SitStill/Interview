@@ -8,7 +8,7 @@
 - Fetch API
 
 *项目结构*
-'''
+```
 frontend/
 |-- src/
 |   |-- components/
@@ -24,14 +24,13 @@ frontend/
 |-- public/
 |-- package.json
 |-- ...
-'''
-
+```
 *运行*
-‘’‘
+```
 cd frontend
 npm install
 npm start
-’‘’
+```
 
 
 #后端
@@ -42,7 +41,7 @@ npm start
 - Javalin
 
 *项目结构*
-'''
+```
 backend/
 |-- src/
 |   |-- main/
@@ -67,27 +66,26 @@ backend/
 |   |   |   |-- MySQLiteDataSource.java
 |-- pom.xml
 |-- ...
-
-‘’‘
+```
 
 *运行*
-‘’‘
+```
 cd backend
 mvn clean install
 java -jar target/backend-<version>.jar
-’‘’
+```
 
 # 数据库
 - SQLite
 数据库文件: survey.db
 
 *数据表*
-- survey
-- - id INTEGER PRIMARY KEY AUTOINCREMENT
-- - user_id TEXT
-- - question TEXT
-- - answer TEXT
-- - attachment TEXT
+> survey
+> - id INTEGER PRIMARY KEY AUTOINCREMENT
+> - user_id TEXT
+> - question TEXT
+> - answer TEXT
+> - attachment TEXT
 
 # 注意事项
 - 在运行前端和后端之前，请确保你的系统已经安装了相应的运行环境（如 Node.js、Java、Maven）。
