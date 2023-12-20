@@ -1,5 +1,7 @@
 
-G
-java:S1068	"*Remove this unused "logger" private field.(ü¿Š8Ó›ƒ“È1
+[
+java:S34006"9Remove this method and declare a constant for this value.(°òÀ•ÿÿÿÿÿ8™ó¢”È1
+Q
+java:S11722"/Remove this unused method parameter "username".(™²ğºüÿÿÿÿ8™ó¢”È1
 T
-java:S3655"7Call "Optional#isPresent()" before accessing the value.(ù“Ê8Ú‚Ê‘È1
+java:S3655"7Call "Optional#isPresent()" before accessing the value.(ÃñÿÉ8Ä•§È1

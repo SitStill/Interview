@@ -64,3 +64,9 @@ v
 Fsrc/main/java/com/example/backend/repositories/UserRepositoryImpl.java,b/0/b08f07d090f069dc60675d5b1771de6d184bd0a1
 o
 ?src/main/java/com/example/backend/services/AuthServiceImpl.java,e/4/e4189c90927880c2593a448c77ac5e2765b33638
+T
+$frontend/src/components/SearchBar.js,f/7/f742dec6a5500d6ccf53f80fbefe5e22487248f8
+C
+frontend/src/App.js,d/6/d63b8ace488b6134c279ccc0cc109223d4d79c20
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
