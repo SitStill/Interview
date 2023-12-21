@@ -1,6 +1,5 @@
 package com.example.backend.controllers;
 
-import com.alibaba.fastjson.JSONObject;
 import com.example.backend.models.Survey;
 import com.example.backend.services.SurveyService;
 import io.javalin.http.Context;
@@ -99,12 +98,21 @@ public class SurveyController {
             Path tempFile = Files.createTempFile(Paths.get(uploadDirectory), "upload-", ".tmp");
             InputStream input = attachment.getContent();
             Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
-            return tempFile.toString();
+
+            logger.info("Temporary file path: {}", tempFile.toString());
+
+            // 在返回之前检查文件是否存在
+            if (Files.exists(tempFile)) {
+                return tempFile.toString();
+            } else {
+                return null; // 或者返回默认附件路径
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
+
 
 
 }

@@ -10,6 +10,15 @@ const SurveyList = ({ surveys }) => {
             <p>User ID: {survey.userId}</p>
             <p>Question: {survey.question}</p>
             <p>Answer: {survey.answer}</p>
+            {survey.attachment && (
+                          <p>
+                            Attachment:
+                            {/* Assuming attachment is a file path; adjust accordingly */}
+                            <a href={`/api/attachments/${attachmentPath}`} target="_blank" rel="noopener noreferrer">
+                              View Attachment
+                            </a>
+                          </p>
+                        )}
           </li>
         ))}
       </ul>
