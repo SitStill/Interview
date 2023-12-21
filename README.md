@@ -15,7 +15,7 @@ frontend/
 |   |   |-- SurveyForm.js
 |   |   |-- SearchBar.js
 |   |   |-- SurveyList.js
-|   |   |-- ...
+|   |   |-- Login.js
 |   |   |-- SubmitSurveyPage.js
 |   |   |-- SearchSurveyPage.js
 |   |   |-- ...
@@ -33,7 +33,7 @@ npm start
 ```
 
 
-#后端
+# 后端
 *技术栈*
 - Java 1.8
 - Spark Framework
@@ -90,7 +90,7 @@ java -jar target/backend-<version>.jar
 # 注意事项
 - 在运行前端和后端之前，请确保你的系统已经安装了相应的运行环境（如 Node.js、Java、Maven）。
 - 在项目根目录下可能包含其他配置文件和依赖，具体取决于项目结构和工具使用。
-
+- 默认登陆用户名：admin 密码： admin
 
 
 
